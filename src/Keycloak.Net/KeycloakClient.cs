@@ -5,6 +5,7 @@ using Flurl.Http.Configuration;
 using Keycloak.Net.Common.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Keycloak.Net
 {
@@ -20,7 +21,7 @@ namespace Keycloak.Net
         private readonly string _userName;
         private readonly string _password;
         private readonly string _clientSecret;
-        private readonly Func<string> _getToken;
+        private readonly Func<Task<string>> _getTokenAsync;
 
         private KeycloakClient(string url)
         {
@@ -43,7 +44,13 @@ namespace Keycloak.Net
         public KeycloakClient(string url, Func<string> getToken)
             : this(url)
         {
-            _getToken = getToken;
+            _getTokenAsync = () => Task.FromResult(getToken());
+        }
+
+        public KeycloakClient(string url, Func<Task<string>> getTokenAsync)
+            : this(url)
+        {
+            _getTokenAsync = getTokenAsync;
         }
 
         public void SetSerializer(ISerializer serializer)
@@ -51,9 +58,9 @@ namespace Keycloak.Net
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
-        private IFlurlRequest GetBaseUrl(string authenticationRealm) => new Url(_url)
+        private Task<IFlurlRequest> GetBaseUrlAsync(string authenticationRealm) => new Url(_url)
             .AppendPathSegment("/auth")
             .ConfigureRequest(settings => settings.JsonSerializer = _serializer)
-            .WithAuthentication(_getToken, _url, authenticationRealm, _userName, _password, _clientSecret);
+            .WithAuthenticationAsync(_getTokenAsync, _url, authenticationRealm, _userName, _password, _clientSecret);
     }
 }

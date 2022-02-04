@@ -33,7 +33,7 @@ namespace Keycloak.Net
 
         private async Task<HttpResponseMessage> InternalCreateClientAsync(string realm, Client client)
         {
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients")
@@ -49,7 +49,7 @@ namespace Keycloak.Net
                 [nameof(viewableOnly)] = viewableOnly
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients")
@@ -58,7 +58,7 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
         }
 
-        public async Task<Client> GetClientAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<Client> GetClientAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -68,7 +68,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateClientAsync(string realm, string clientId, Client client)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -80,7 +80,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteClientAsync(string realm, string clientId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -90,7 +90,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<Credentials> GenerateClientSecretAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<Credentials> GenerateClientSecretAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -100,7 +100,7 @@ namespace Keycloak.Net
             .ReceiveJson<Credentials>()
             .ConfigureAwait(false);
 
-        public async Task<Credentials> GetClientSecretAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<Credentials> GetClientSecretAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -109,7 +109,7 @@ namespace Keycloak.Net
             .GetJsonAsync<Credentials>()
             .ConfigureAwait(false);
 
-        public async Task<IEnumerable<ClientScope>> GetDefaultClientScopesAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<ClientScope>> GetDefaultClientScopesAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -120,7 +120,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateDefaultClientScopeAsync(string realm, string clientId, string clientScopeId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -134,7 +134,7 @@ namespace Keycloak.Net
                                                                                                    
         public async Task<bool> DeleteDefaultClientScopeAsync(string realm, string clientId, string clientScopeId)
         {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))                                                 
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -155,7 +155,7 @@ namespace Keycloak.Net
                 [nameof(userId)] = userId
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -173,7 +173,7 @@ namespace Keycloak.Net
                 [nameof(scope)] = scope
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -191,7 +191,7 @@ namespace Keycloak.Net
                 [nameof(scope)] = scope
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -211,7 +211,7 @@ namespace Keycloak.Net
                 [nameof(scope)] = scope
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -225,7 +225,7 @@ namespace Keycloak.Net
         }
 
         [Obsolete("Not working yet")]
-        public async Task<string> GetClientProviderAsync(string realm, string clientId, string providerId) => await GetBaseUrl(realm)
+        public async Task<string> GetClientProviderAsync(string realm, string clientId, string providerId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -235,7 +235,7 @@ namespace Keycloak.Net
             .GetStringAsync()
             .ConfigureAwait(false);
         
-        public async Task<ManagementPermission> GetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<ManagementPermission> GetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -245,7 +245,7 @@ namespace Keycloak.Net
             .ConfigureAwait(false);
 
         public async Task<ManagementPermission> SetClientAuthorizationPermissionsInitializedAsync(string realm, string clientId, ManagementPermission managementPermission) => 
-            await GetBaseUrl(realm)
+            await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -257,7 +257,7 @@ namespace Keycloak.Net
 
         public async Task<bool> RegisterClientClusterNodeAsync(string realm, string clientId, IDictionary<string, object> formParams)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -270,7 +270,7 @@ namespace Keycloak.Net
                                                                                                    
         public async Task<bool> UnregisterClientClusterNodeAsync(string realm, string clientId)
         {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))                                                 
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -283,7 +283,7 @@ namespace Keycloak.Net
 
         public async Task<int> GetClientOfflineSessionCountAsync(string realm, string clientId)
         {
-            var result = await GetBaseUrl(realm)
+            var result = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -303,7 +303,7 @@ namespace Keycloak.Net
                 [nameof(max)] = max
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -314,7 +314,7 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
         }
         
-        public async Task<IEnumerable<ClientScope>> GetOptionalClientScopesAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<ClientScope>> GetOptionalClientScopesAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -325,7 +325,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateOptionalClientScopeAsync(string realm, string clientId, string clientScopeId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -339,7 +339,7 @@ namespace Keycloak.Net
                                                                                                    
         public async Task<bool> DeleteOptionalClientScopeAsync(string realm, string clientId, string clientScopeId)
         {                                                                                          
-            var response = await GetBaseUrl(realm)                                                 
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))                                                 
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -351,7 +351,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<GlobalRequestResult> PushClientRevocationPolicyAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<GlobalRequestResult> PushClientRevocationPolicyAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -361,7 +361,7 @@ namespace Keycloak.Net
             .ReceiveJson<GlobalRequestResult>()
             .ConfigureAwait(false);
 
-        public async Task<Client> GenerateClientRegistrationAccessTokenAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<Client> GenerateClientRegistrationAccessTokenAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -372,7 +372,7 @@ namespace Keycloak.Net
             .ConfigureAwait(false);
 
         [Obsolete("Not working yet")]
-        public async Task<User> GetUserForServiceAccountAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<User> GetUserForServiceAccountAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -383,7 +383,7 @@ namespace Keycloak.Net
 
         public async Task<int> GetClientSessionCountAsync(string realm, string clientId)
         {
-            var result = await GetBaseUrl(realm)
+            var result = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -395,7 +395,7 @@ namespace Keycloak.Net
             return Convert.ToInt32(DynamicExtensions.GetFirstPropertyValue(result));
         }
 
-        public async Task<GlobalRequestResult> TestClientClusterNodesAvailableAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<GlobalRequestResult> TestClientClusterNodesAvailableAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -412,7 +412,7 @@ namespace Keycloak.Net
                 [nameof(max)] = max
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -423,7 +423,7 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Resource>> GetResourcesOwnedByClientAsync(string realm, string clientId) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<Resource>> GetResourcesOwnedByClientAsync(string realm, string clientId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/protocol/openid-connect/token")

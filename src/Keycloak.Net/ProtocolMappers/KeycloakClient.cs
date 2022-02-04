@@ -9,7 +9,7 @@ namespace Keycloak.Net
     {
         public async Task<bool> CreateMultipleProtocolMappersAsync(string realm, string clientScopeId, IEnumerable<ProtocolMapper> protocolMapperRepresentations)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/client-scopes/")
@@ -22,7 +22,7 @@ namespace Keycloak.Net
 
         public async Task<bool> CreateProtocolMapperAsync(string realm, string clientScopeId, ProtocolMapper protocolMapperRepresentation)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/client-scopes/")
@@ -33,7 +33,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<ProtocolMapper>> GetProtocolMappersAsync(string realm, string clientScopeId) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<ProtocolMapper>> GetProtocolMappersAsync(string realm, string clientScopeId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/client-scopes/")
@@ -42,7 +42,7 @@ namespace Keycloak.Net
             .GetJsonAsync<IEnumerable<ProtocolMapper>>()
             .ConfigureAwait(false);
 
-        public async Task<ProtocolMapper> GetProtocolMapperAsync(string realm, string clientScopeId, string protocolMapperId) => await GetBaseUrl(realm)
+        public async Task<ProtocolMapper> GetProtocolMapperAsync(string realm, string clientScopeId, string protocolMapperId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/client-scopes/")
@@ -54,7 +54,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateProtocolMapperAsync(string realm, string clientScopeId, string protocolMapperId, ProtocolMapper protocolMapperRepresentation)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/client-scopes/")
@@ -68,7 +68,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteProtocolMapperAsync(string realm, string clientScopeId, string protocolMapperId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/client-scopes/")
@@ -80,7 +80,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<ProtocolMapper>> GetProtocolMappersByNameAsync(string realm, string clientScopeId, string protocol) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<ProtocolMapper>> GetProtocolMappersByNameAsync(string realm, string clientScopeId, string protocol) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/client-scopes/")

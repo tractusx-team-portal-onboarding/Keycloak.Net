@@ -9,7 +9,7 @@ namespace Keycloak.Net
     {
         public async Task<bool> CreateComponentAsync(string realm, Component componentRepresentation)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components")
@@ -27,7 +27,7 @@ namespace Keycloak.Net
                 [nameof(type)] = type
             };
 
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components")
@@ -38,7 +38,7 @@ namespace Keycloak.Net
 
         public async Task<Component> GetComponentAsync(string realm, string componentId)
         {
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components/")
@@ -49,7 +49,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateComponentAsync(string realm, string componentId, Component componentRepresentation)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components/")
@@ -61,7 +61,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteComponentAsync(string realm, string componentId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components/")
@@ -78,7 +78,7 @@ namespace Keycloak.Net
                 [nameof(type)] = type
             };
 
-            var result = await GetBaseUrl(realm)
+            var result = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/components/")

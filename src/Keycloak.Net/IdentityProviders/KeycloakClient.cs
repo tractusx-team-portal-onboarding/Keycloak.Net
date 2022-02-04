@@ -9,7 +9,7 @@ namespace Keycloak.Net
 {
     public partial class KeycloakClient
     {
-        public async Task<IDictionary<string, object>> ImportIdentityProviderAsync(string realm, string input) => await GetBaseUrl(realm)
+        public async Task<IDictionary<string, object>> ImportIdentityProviderAsync(string realm, string input) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/import-config")
@@ -19,7 +19,7 @@ namespace Keycloak.Net
 
         public async Task<bool> CreateIdentityProviderAsync(string realm, IdentityProvider identityProvider)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances")
@@ -28,14 +28,14 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<IdentityProvider>> GetIdentityProviderInstancesAsync(string realm) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<IdentityProvider>> GetIdentityProviderInstancesAsync(string realm) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances")
             .GetJsonAsync<IEnumerable<IdentityProvider>>()
             .ConfigureAwait(false);
 
-        public async Task<IdentityProvider> GetIdentityProviderAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
+        public async Task<IdentityProvider> GetIdentityProviderAsync(string realm, string identityProviderAlias) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances/")
@@ -49,7 +49,7 @@ namespace Keycloak.Net
         /// <param name="realm"></param>
         /// <param name="identityProviderAlias"></param>
         /// <returns></returns>
-        public async Task<IdentityProviderToken> GetIdentityProviderTokenAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
+        public async Task<IdentityProviderToken> GetIdentityProviderTokenAsync(string realm, string identityProviderAlias) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/broker/")
@@ -60,7 +60,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateIdentityProviderAsync(string realm, string identityProviderAlias, IdentityProvider identityProvider)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -72,7 +72,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteIdentityProviderAsync(string realm, string identityProviderAlias)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -84,7 +84,7 @@ namespace Keycloak.Net
 
         public async Task<bool> ExportIdentityProviderPublicBrokerConfigurationAsync(string realm, string identityProviderAlias)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -95,7 +95,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
         
-        public async Task<ManagementPermission> GetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
+        public async Task<ManagementPermission> GetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances/")
@@ -105,7 +105,7 @@ namespace Keycloak.Net
             .ConfigureAwait(false);
 
         public async Task<ManagementPermission> SetIdentityProviderAuthorizationPermissionsInitializedAsync(string realm, string identityProviderAlias, ManagementPermission managementPermission) => 
-            await GetBaseUrl(realm)
+            await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -115,7 +115,7 @@ namespace Keycloak.Net
                 .ReceiveJson<ManagementPermission>()
                 .ConfigureAwait(false);
         
-        public async Task<IDictionary<string, object>> GetIdentityProviderMapperTypesAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
+        public async Task<IDictionary<string, object>> GetIdentityProviderMapperTypesAsync(string realm, string identityProviderAlias) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances/")
@@ -126,7 +126,7 @@ namespace Keycloak.Net
 
         public async Task<bool> AddIdentityProviderMapperAsync(string realm, string identityProviderAlias, IdentityProviderMapper identityProviderMapper)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -137,7 +137,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
         
-        public async Task<IEnumerable<IdentityProviderMapper>> GetIdentityProviderMappersAsync(string realm, string identityProviderAlias) => await GetBaseUrl(realm)
+        public async Task<IEnumerable<IdentityProviderMapper>> GetIdentityProviderMappersAsync(string realm, string identityProviderAlias) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances/")
@@ -146,7 +146,7 @@ namespace Keycloak.Net
             .GetJsonAsync<IEnumerable<IdentityProviderMapper>>()
             .ConfigureAwait(false);
         
-        public async Task<IdentityProviderMapper> GetIdentityProviderMapperByIdAsync(string realm, string identityProviderAlias, string mapperId) => await GetBaseUrl(realm)
+        public async Task<IdentityProviderMapper> GetIdentityProviderMapperByIdAsync(string realm, string identityProviderAlias, string mapperId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/instances/")
@@ -158,7 +158,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateIdentityProviderMapperAsync(string realm, string identityProviderAlias, string mapperId, IdentityProviderMapper identityProviderMapper)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -172,7 +172,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteIdentityProviderMapperAsync(string realm, string identityProviderAlias, string mapperId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/identity-provider/instances/")
@@ -184,7 +184,7 @@ namespace Keycloak.Net
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IdentityProviderInfo> GetIdentityProviderByProviderIdAsync(string realm, string providerId) => await GetBaseUrl(realm)
+        public async Task<IdentityProviderInfo> GetIdentityProviderByProviderIdAsync(string realm, string providerId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/identity-provider/providers/")

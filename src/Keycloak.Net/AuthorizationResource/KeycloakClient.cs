@@ -9,7 +9,7 @@ namespace Keycloak.Net
     {
         public async Task<bool> CreateResourceAsync(string realm, string resourceServerId, AuthorizationResource resource)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -35,7 +35,7 @@ namespace Keycloak.Net
                 [nameof(uri)] = uri
             };
             
-            return await GetBaseUrl(realm)
+            return await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -46,7 +46,7 @@ namespace Keycloak.Net
                 .ConfigureAwait(false);
         }
 
-        public async Task<AuthorizationResource> GetResourceAsync(string realm, string resourceServerId, string resourceId) => await GetBaseUrl(realm)
+        public async Task<AuthorizationResource> GetResourceAsync(string realm, string resourceServerId, string resourceId) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/clients/")
@@ -58,7 +58,7 @@ namespace Keycloak.Net
 
         public async Task<bool> UpdateResourceAsync(string realm, string resourceServerId, string resourceId, AuthorizationResource resource)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")
@@ -72,7 +72,7 @@ namespace Keycloak.Net
 
         public async Task<bool> DeleteResourceAsync(string realm, string resourceServerId, string resourceId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/clients/")

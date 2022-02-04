@@ -11,7 +11,7 @@ namespace Keycloak.Net
         [Obsolete("Not working yet")]
         public async Task<bool> RemoveImportedUsersAsync(string realm, string storageProviderId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/user-storage/")
@@ -23,7 +23,7 @@ namespace Keycloak.Net
         }
 
         [Obsolete("Not working yet")]
-        public async Task<SynchronizationResult> TriggerUserSynchronizationAsync(string realm, string storageProviderId, UserSyncActions action) => await GetBaseUrl(realm)
+        public async Task<SynchronizationResult> TriggerUserSynchronizationAsync(string realm, string storageProviderId, UserSyncActions action) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/user-storage/")
@@ -37,7 +37,7 @@ namespace Keycloak.Net
         [Obsolete("Not working yet")]
         public async Task<bool> UnlinkImportedUsersAsync(string realm, string storageProviderId)
         {
-            var response = await GetBaseUrl(realm)
+            var response = await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
                 .AppendPathSegment("/admin/realms/")
                 .AppendPathSegment(realm, true)
                 .AppendPathSegment("/user-storage/")
@@ -49,7 +49,7 @@ namespace Keycloak.Net
         }
 
         [Obsolete("Not working yet")]
-        public async Task<SynchronizationResult> TriggerLdapMapperSynchronizationAsync(string realm, string storageProviderId, string mapperId, LdapMapperSyncActions direction) => await GetBaseUrl(realm)
+        public async Task<SynchronizationResult> TriggerLdapMapperSynchronizationAsync(string realm, string storageProviderId, string mapperId, LdapMapperSyncActions direction) => await (await GetBaseUrlAsync(realm).ConfigureAwait(false))
             .AppendPathSegment("/admin/realms/")
             .AppendPathSegment(realm, true)
             .AppendPathSegment("/user-storage/")

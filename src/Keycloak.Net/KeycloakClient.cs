@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Flurl;
 using Flurl.Http;
 using Flurl.Http.Configuration;
